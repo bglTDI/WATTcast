@@ -92,10 +92,10 @@ for i,ind in enumerate(data_info['valid_idx']):
 	X_valid[i,:,:]=X[ind,:,:]
 	Y_valid[i,:]=Y[ind,:]
 
-dill.dump(X_train,open("Data/X_train.pkl"),'wb')
-dill.dump(X_valid,open("Data/X_valid.pkl"),'wb')
-dill.dump(Y_train,open("Data/Y_train.pkl"),'wb')
-dill.dump(Y_valid,open("Data/Y_valid.pkl"),'wb')
+dill.dump(X_train,open("Data/X_train.pkl",'wb'))
+dill.dump(X_valid,open("Data/X_valid.pkl",'wb'))
+dill.dump(Y_train,open("Data/Y_train.pkl",'wb'))
+dill.dump(Y_valid,open("Data/Y_valid.pkl",'wb'))
 
 # Import a worker class
 from WTTWorker import WTTWorker as worker
