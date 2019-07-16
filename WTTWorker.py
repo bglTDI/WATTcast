@@ -161,7 +161,7 @@ class WTTWorker(Worker):
 				out[i]=1-np.linalg.norm(mat_predict[:,i]-mat_true[:,i])/np.linalg.norm(mat_predict[:,i]-mat_true[:,i].mean())
 			return out
 
-		weighted_R2=-sum(columnar_R2(Y_predict,self.Y_valid))
+		weighted_R2=-sum(columnar_R2(Y_predict,self.Y_valid))/4
 
 		return({'loss': weighted_R2, 
 				'info': {'num_pars':model.count_params(),
@@ -177,16 +177,16 @@ class WTTWorker(Worker):
 										default_value=1e-2,log=True)
 
 		GRU_dropout_rate=UFH(			'GRU_dropout_rate',
-										lower=.1,upper=.6,
+										lower=.1,upper=.4,
 										default_value=.3,log=True)
 
 		dropout_layer_rate=UFH(			'dropout_layer_rate',
-										lower=.1,upper=.6,
+										lower=.1,upper=.4,
 										default_value=.3,log=True)
 
 		num_station_feature_GRU1=UIH(	'num_station_feature_GRU1',
-										lower=10,upper=100,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=30,log=False)
 
 		num_station_feature_conv=UIH(	'num_station_feature_conv',
 										lower=10,upper=50,
@@ -197,12 +197,12 @@ class WTTWorker(Worker):
 										default_value=3,log=False)
 
 		num_station_feature_GRU2=UIH(	'num_station_feature_GRU2',
-										lower=10,upper=100,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=30,log=False)
 
 		num_station_temporal_GRU1=UIH(	'num_station_temporal_GRU1',
-										lower=10,upper=100,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=30,log=False)
 
 		num_station_temporal_conv=UIH(	'num_station_temporal_conv',
 										lower=10,upper=50,
@@ -213,12 +213,12 @@ class WTTWorker(Worker):
 										default_value=3,log=False)
 
 		num_station_temporal_GRU2=UIH(	'num_station_temporal_GRU2',
-										lower=10,upper=100,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=30,log=False)
 
 		num_weather_temporal_GRU1=UIH(	'num_weather_temporal_GRU1',
-										lower=10,upper=100,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=30,log=False)
 
 		num_weather_temporal_conv=UIH(	'num_weather_temporal_conv',
 										lower=10,upper=50,
@@ -229,16 +229,16 @@ class WTTWorker(Worker):
 										default_value=3,log=False)
 
 		num_weather_temporal_GRU2=UIH(	'num_weather_temporal_GRU2',
-										lower=10,upper=100,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=30,log=False)
 
 		num_dense1=UIH(					'num_dense1',
-										lower=10,upper=200,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=20,log=False)
 
 		num_dense2=UIH(					'num_dense2',
-										lower=10,upper=200,
-										default_value=50,log=False)
+										lower=10,upper=50,
+										default_value=20,log=False)
 
 		cs.add_hyperparameters([		learning_rate,
 										GRU_dropout_rate,
