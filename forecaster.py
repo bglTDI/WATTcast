@@ -5,6 +5,7 @@ import dill
 import os
 import argparse
 import logging
+import time
 
 import hpbandster.core.nameserver as hpns
 import hpbandster.core.result as hpres
@@ -65,6 +66,37 @@ data_info['valid_idx']=valid_idx
 
 dill.dump(data_info,open("Data/data_info.pkl",'wb'))
 
+X=dill.load(open('Data/BPAT_X_slices.pkl','rb'))
+Y=dill.load(open('Data/BPAT_Y_slices.pkl','rb'))
+
+X_train=np.zeros(
+	(data_info['num_train_samples'],
+	 data_info['train_time'],
+	 data_info['num_features']))
+Y_train=np.zeros(
+	(data_info['num_train_samples'],
+	 data_info['predict_time']))
+
+X_valid=np.zeros(
+	(data_info['num_valid_samples'],
+	 data_info['train_time'],
+	 data_info['num_features']))
+Y_valid=np.zeros(
+	(data_info['num_valid_samples'],
+	 data_info['predict_time']))
+
+for i,ind in enumerate(self.data_info['train_idx']):
+	X_train[i,:,:]=X[ind,:,:]
+	Y_train[i,:]=Y[ind,:]
+for i,ind in enumerate(self.data_info['valid_idx']):
+	X_valid[i,:,:]=X[ind,:,:]
+	Y_valid[i,:]=Y[ind,:]
+
+dill.dump(X_train,open("Data/X_train.pkl"),'wb')
+dill.dump(X_valid,open("Data/X_valid.pkl"),'wb')
+dill.dump(Y_train,open("Data/Y_train.pkl"),'wb')
+dill.dump(Y_valid,open("Data/Y_valid.pkl"),'wb')
+
 # Import a worker class
 from WTTWorker import WTTWorker as worker
 
@@ -93,6 +125,7 @@ NS.start()
 #Start the workers
 workers=[]
 for i in range(args.n_workers):
+	time.sleep(5)
     w = worker(nameserver='127.0.0.1',run_id='WTTcast', id=i)
     w.run(background=True)
     workers.append(w)

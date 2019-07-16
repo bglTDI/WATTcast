@@ -28,40 +28,14 @@ class WTTWorker(Worker):
 
 		self.data_info=dill.load(open('Data/data_info.pkl','rb'))
 
-		X=dill.load(open('Data/BPAT_X_slices.pkl','rb'))
-		Y=dill.load(open('Data/BPAT_Y_slices.pkl','rb'))
-
-		X_train=np.zeros(
-			(self.data_info['num_train_samples'],
-			 self.data_info['train_time'],
-			 self.data_info['num_features']))
-		Y_train=np.zeros(
-			(self.data_info['num_train_samples'],
-			 self.data_info['predict_time']))
-
-		X_valid=np.zeros(
-			(self.data_info['num_valid_samples'],
-			 self.data_info['train_time'],
-			 self.data_info['num_features']))
-		Y_valid=np.zeros(
-			(self.data_info['num_valid_samples'],
-			 self.data_info['predict_time']))
-
-		for i,ind in enumerate(self.data_info['train_idx']):
-			X_train[i,:,:]=X[ind,:,:]
-			Y_train[i,:]=Y[ind,:]
-		for i,ind in enumerate(self.data_info['valid_idx']):
-			X_valid[i,:,:]=X[ind,:,:]
-			Y_valid[i,:]=Y[ind,:]
-
-		self.X_train=X_train
-		self.X_valid=X_valid
-		self.Y_train=Y_train
-		self.Y_valid=Y_valid
+		self.X_train=dill.load(open('Data/X_train.pkl','rb'))
+		self.X_valid=dill.load(open('Data/X_valid.pkl','rb'))
+		self.Y_train=dill.load(open('Data/Y_train.pkl','rb'))
+		self.Y_valid=dill.load(open('Data/Y_valid.pkl','rb'))
 	  
 	def compute(self,config,budget,working_directory,*args,**kwargs):
 
-		#####################################################################
+		####################################################################
 		# Input & Split #####################################################
 		#####################################################################
 		concatenated_input= Input(shape = (self.data_info['train_time'],self.data_info['num_features'],))
@@ -148,7 +122,7 @@ class WTTWorker(Worker):
 		
 		model.compile(loss='mean_squared_error', optimizer=Adam(lr=config['learning_rate']))
 
-		model.fit(self.X_train, self.Y_train, batch_size=self.batch_size, epochs=int(budget))
+		model.fit(self.X_train, self.Y_train, batch_size=self.batch_size, epochs=int(budget),verbose=0)
 
 		train_score=model.evaluate(self.X_train,self.Y_train)
 		valid_score=model.evaluate(self.X_valid,self.Y_valid)
