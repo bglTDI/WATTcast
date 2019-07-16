@@ -15,7 +15,7 @@ from hpbandster.optimizers import BOHB
 #Toggle the following to un/mute the nameserver chatter
 # logging.basicConfig(level=logging.WARNING)
 
-Warm start option
+# Warm start option
 warm_start=True
 
 #Check for previous runs, set pointer to latest, make new results directory
