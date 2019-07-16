@@ -71,19 +71,19 @@ Y=dill.load(open('Data/BPAT_Y_slices.pkl','rb'))
 
 X_train=np.zeros(
 	(data_info['num_train_samples'],
-	 data_info['train_time'],
-	 data_info['num_features']))
+	data_info['train_time'],
+	data_info['num_features']))
 Y_train=np.zeros(
 	(data_info['num_train_samples'],
-	 data_info['predict_time']))
+	data_info['predict_time']))
 
 X_valid=np.zeros(
 	(data_info['num_valid_samples'],
-	 data_info['train_time'],
-	 data_info['num_features']))
+	data_info['train_time'],
+	data_info['num_features']))
 Y_valid=np.zeros(
 	(data_info['num_valid_samples'],
-	 data_info['predict_time']))
+	data_info['predict_time']))
 
 for i,ind in enumerate(self.data_info['train_idx']):
 	X_train[i,:,:]=X[ind,:,:]
@@ -126,23 +126,22 @@ NS.start()
 workers=[]
 for i in range(args.n_workers):
 	time.sleep(5)
-    w = worker(nameserver='127.0.0.1',run_id='WTTcast', id=i)
-    w.run(background=True)
-    workers.append(w)
+	w = worker(nameserver='127.0.0.1',run_id='WTTcast', id=i)
+	w.run(background=True)
+	workers.append(w)
 
 #Define and run an optimizer
 if warm_start_check:
-	bohb = BOHB(  configspace = w.get_configspace(),
-	              run_id = 'WTTcast',
-	              result_logger=result_logger,
-	              min_budget=args.min_budget, max_budget=args.max_budget,
-	              previous_result = previous_run
-	           )
+	bohb = BOHB(configspace = w.get_configspace(),
+				run_id = 'WTTcast',
+				result_logger=result_logger,
+				min_budget=args.min_budget, max_budget=args.max_budget,
+				previous_result = previous_run)
 else:
-	bohb = BOHB(  configspace = w.get_configspace(),
-              run_id = 'WTTcast',
-              result_logger=result_logger,
-              min_budget=args.min_budget, max_budget=args.max_budget) 
+	bohb = BOHB(configspace = w.get_configspace(),
+				run_id = 'WTTcast',
+				result_logger=result_logger,
+				min_budget=args.min_budget, max_budget=args.max_budget) 
 
 res = bohb.run(n_iterations=args.n_iterations, min_n_workers=args.n_workers)
 

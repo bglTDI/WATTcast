@@ -21,9 +21,6 @@ from ConfigSpace.hyperparameters import UniformIntegerHyperparameter as UIH
 class WTTWorker(Worker):
 	def __init__(self,**kwargs):
 		super().__init__(**kwargs)
-
-		time.sleep(10)
-
 		self.batch_size=16
 
 		self.data_info=dill.load(open('Data/data_info.pkl','rb'))
@@ -51,14 +48,14 @@ class WTTWorker(Worker):
 		
 		station_feature_GRU1 = GRU(	config['num_station_feature_GRU1'],
 									recurrent_dropout=config['GRU_dropout_rate'], 
-								   	return_sequences = True)(station_input)
+									return_sequences = True)(station_input)
 		station_feature_dropout_1 = Dropout(rate=config['dropout_layer_rate'])(station_feature_GRU1)
 		station_feature_conv1 = Conv1D(	config['num_station_feature_conv'],
 										config['size_station_feature_conv'],
-									   	padding="valid")(station_feature_dropout_1)
+										padding="valid")(station_feature_dropout_1)
 		station_feature_GRU2 = GRU(	config['num_station_feature_GRU2'], 
 									recurrent_dropout=config['GRU_dropout_rate'],
-								   	return_sequences=True)(station_feature_conv1)
+									return_sequences=True)(station_feature_conv1)
 		station_feature_flatten =Flatten()(station_feature_GRU2)
 		
 		#####################################################################
@@ -69,14 +66,14 @@ class WTTWorker(Worker):
 		
 		station_temporal_GRU1 = GRU(config['num_station_temporal_GRU1'],
 									recurrent_dropout=config['GRU_dropout_rate'],
-								   	return_sequences = True)(transpose_station_input)
+									return_sequences = True)(transpose_station_input)
 		station_temporal_dropout_1 = Dropout(rate=config['dropout_layer_rate'])(station_feature_GRU1)
 		station_temporal_conv1 = Conv1D(config['num_station_temporal_conv'],
-									   	config['size_station_temporal_conv'],
-									   	padding="valid")(station_feature_dropout_1)
+										config['size_station_temporal_conv'],
+										padding="valid")(station_feature_dropout_1)
 		station_temporal_GRU2 = GRU(config['num_station_temporal_GRU2'],
-								    recurrent_dropout=config['GRU_dropout_rate'],
-								   	return_sequences=True)(station_temporal_conv1)
+									recurrent_dropout=config['GRU_dropout_rate'],
+									return_sequences=True)(station_temporal_conv1)
 		station_temporal_flatten =Flatten()(station_temporal_GRU2)
 
 		#####################################################################
@@ -90,11 +87,11 @@ class WTTWorker(Worker):
 										return_sequences = True)(transpose_weather_input)
 		weather_temporal_dropout_1 = Dropout(rate=config['dropout_layer_rate'])(weather_temporal_GRU1)
 		weather_temporal_conv1 = Conv1D(	config['num_weather_temporal_conv'],
-									   		config['size_weather_temporal_conv'],
-									   		padding="valid")(weather_temporal_dropout_1)
+											config['size_weather_temporal_conv'],
+											padding="valid")(weather_temporal_dropout_1)
 		weather_temporal_GRU2 = GRU(	config['num_weather_temporal_GRU2'], 
-								  		recurrent_dropout=config['GRU_dropout_rate'],
-								   		return_sequences=True)(weather_temporal_conv1)
+										recurrent_dropout=config['GRU_dropout_rate'],
+									return_sequences=True)(weather_temporal_conv1)
 		weather_temporal_flatten =Flatten()(weather_temporal_GRU2)		
 		
 		#####################################################################
