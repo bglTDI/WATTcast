@@ -44,9 +44,9 @@ if make_slices:
 	dill.dump(Y,open("Data/BPAT_Y_slices.pkl",'wb'))
 
 test_train_richness=.8
-top=int(test_train_richness*len(X))
+top=int(test_train_richness*6000)
 
-idx=list(range(len(X)))
+idx=list(range(6000))
 np.random.shuffle(idx)
 train_idx=idx[:top]
 valid_idx=idx[top:]	
