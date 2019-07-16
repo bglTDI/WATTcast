@@ -85,10 +85,10 @@ Y_valid=np.zeros(
 	(data_info['num_valid_samples'],
 	data_info['predict_time']))
 
-for i,ind in enumerate(self.data_info['train_idx']):
+for i,ind in enumerate(data_info['train_idx']):
 	X_train[i,:,:]=X[ind,:,:]
 	Y_train[i,:]=Y[ind,:]
-for i,ind in enumerate(self.data_info['valid_idx']):
+for i,ind in enumerate(data_info['valid_idx']):
 	X_valid[i,:,:]=X[ind,:,:]
 	Y_valid[i,:]=Y[ind,:]
 
