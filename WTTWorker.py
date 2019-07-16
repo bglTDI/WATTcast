@@ -209,7 +209,7 @@ class WTTWorker(Worker):
 										default_value=15,log=False)
 
 		size_station_temporal_conv=UIH(	'size_station_temporal_conv',
-										lower=2,upper=5,
+										lower=2,upper=7,
 										default_value=3,log=False)
 
 		num_station_temporal_GRU2=UIH(	'num_station_temporal_GRU2',
