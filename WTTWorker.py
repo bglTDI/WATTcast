@@ -23,7 +23,7 @@ class WTTWorker(Worker):
 		super().__init__(**kwargs)
 
 		time.sleep(10)
-		
+
 		self.batch_size=16
 
 		self.data_info=dill.load(open('Data/data_info.pkl','rb'))
@@ -152,11 +152,10 @@ class WTTWorker(Worker):
 		model.fit(self.X_train,
 				  self.Y_train,
 				  batch_size=self.batch_size,
-				  epochs=int(budget),
-				  verbose=0)
+				  epochs=int(budget))
 
-		train_score=model.evaluate(self.X_train,self.Y_train,verbose=0)
-		valid_score=model.evaluate(self.X_valid,self.Y_valid,verbose=0)
+		train_score=model.evaluate(self.X_train,self.Y_train)
+		valid_score=model.evaluate(self.X_valid,self.Y_valid)
 		Y_predict=model.predict(self.X_valid)
 
 		def columnar_R2(mat_predict,mat_true):
