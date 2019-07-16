@@ -152,7 +152,8 @@ class WTTWorker(Worker):
 		model.fit(self.X_train,
 				  self.Y_train,
 				  batch_size=self.batch_size,
-				  epochs=int(budget))
+				  epochs=int(budget),
+				  verbose=0)
 
 		train_score=model.evaluate(self.X_train,self.Y_train)
 		valid_score=model.evaluate(self.X_valid,self.Y_valid)
