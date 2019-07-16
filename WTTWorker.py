@@ -161,7 +161,7 @@ class WTTWorker(Worker):
 				out[i]=1-np.linalg.norm(mat_predict[:,i]-mat_true[:,i])/np.linalg.norm(mat_predict[:,i]-mat_true[:,i].mean())
 			return out
 
-		weighted_R2=columnar_R2(Y_predict,self.Y_valid)[0]
+		weighted_R2=-sum(columnar_R2(Y_predict,self.Y_valid))
 
 		return({'loss': weighted_R2, 
 				'info': {'num_pars':model.count_params(),
