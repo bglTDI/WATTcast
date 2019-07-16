@@ -1,6 +1,7 @@
 import numpy as np
 import dill
 from sklearn.model_selection import train_test_split
+import time
 
 from keras.layers import Dense, Lambda ,Input, LSTM, GRU, Dropout, Conv1D, Bidirectional, Flatten, Reshape, Permute, concatenate
 from keras.models import Model, load_model
@@ -20,6 +21,9 @@ from ConfigSpace.hyperparameters import UniformIntegerHyperparameter as UIH
 class WTTWorker(Worker):
 	def __init__(self,**kwargs):
 		super().__init__(**kwargs)
+
+		time.sleep(10)
+		
 		self.batch_size=16
 
 		self.data_info=dill.load(open('Data/data_info.pkl','rb'))
