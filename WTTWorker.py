@@ -146,14 +146,9 @@ class WTTWorker(Worker):
 
 		model=Model(concatenated_input,output)
 		
-		model.compile(loss='mean_squared_error',
-					  optimizer=Adam(lr=config['learning_rate']))
+		model.compile(loss='mean_squared_error', optimizer=Adam(lr=config['learning_rate']))
 
-		model.fit(self.X_train,
-				  self.Y_train,
-				  batch_size=self.batch_size,
-				  epochs=int(budget),
-				  verbose=0)
+		model.fit(self.X_train, self.Y_train, batch_size=self.batch_size, epochs=int(budget), verbose=0)
 
 		train_score=model.evaluate(self.X_train,self.Y_train)
 		valid_score=model.evaluate(self.X_valid,self.Y_valid)
@@ -168,9 +163,7 @@ class WTTWorker(Worker):
 		weighted_R2=-sum(columnar_R2(Y_predict,self.Y_valid))/4
 
 		return({'loss': weighted_R2, 
-				'info': {'num_pars':model.count_params(),
-						 'train':train_score,
-						 'valid':valid_score}})
+				'info': {'num_pars':model.count_params(), 'train':train_score, 'valid':valid_score}})
 
 
 	@staticmethod
