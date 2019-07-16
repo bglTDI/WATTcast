@@ -74,7 +74,7 @@ parser = argparse.ArgumentParser(description='WTTcast - sequential execution.')
 parser.add_argument('--min_budget',   type=float, help='Minimum budget used during the optimization.',    default=3)
 parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=25)
 parser.add_argument('--n_iterations', type=int,   help='Number of iterations performed by the optimizer', default=50)
-parser.add_argument('--n_workers', type=int,   help='Number of workers to run in parallel.', default=4)
+parser.add_argument('--n_workers', type=int,   help='Number of workers to run in parallel.', default=3)
 parser.add_argument('--shared_directory',type=str, help='A directory that is accessible for all processes, e.g. a NFS share.', default='.')
 if warm_start and (run_cnt>0):
 	parser.add_argument('--previous_run_dir',type=str, help='A directory that contains a config.json and results.json for the same configuration space.', default='WTTcast_run_'+str(run_cnt))
