@@ -71,8 +71,8 @@ from WTTWorker import WTTWorker as worker
 #Build an argument parser 
 warm_start_check=False       
 parser = argparse.ArgumentParser(description='WTTcast - sequential execution.')
-parser.add_argument('--min_budget',   type=float, help='Minimum budget used during the optimization.',    default=1)
-parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=10)
+parser.add_argument('--min_budget',   type=float, help='Minimum budget used during the optimization.',    default=5)
+parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=15)
 parser.add_argument('--n_iterations', type=int,   help='Number of iterations performed by the optimizer', default=30)
 parser.add_argument('--n_workers', type=int,   help='Number of workers to run in parallel.', default=1)
 parser.add_argument('--shared_directory',type=str, help='A directory that is accessible for all processes, e.g. a NFS share.', default='.')
