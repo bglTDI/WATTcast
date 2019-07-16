@@ -15,16 +15,16 @@ from hpbandster.optimizers import BOHB
 #Toggle the following to un/mute the nameserver chatter
 # logging.basicConfig(level=logging.WARNING)
 
-#Warm start option
-# warm_start=True
+Warm start option
+warm_start=True
 
-# #Check for previous runs, set pointer to latest, make new results directory
-# run_cnt=-1
-# file_list=os.listdir()
-# for file in file_list:
-# 	temp=set(file.split('_'))
-# 	if {'WTTcast','run'}.issubset(temp):
-# 		run_cnt+=1
+#Check for previous runs, set pointer to latest, make new results directory
+run_cnt=-1
+file_list=os.listdir()
+for file in file_list:
+	temp=set(file.split('_'))
+	if {'WTTcast','run'}.issubset(temp):
+		run_cnt+=1
 
 # os.mkdir('WTTcast_run_'+str(run_cnt+1))
 
@@ -72,13 +72,13 @@ from WTTWorker import WTTWorker as worker
 warm_start_check=False       
 parser = argparse.ArgumentParser(description='WTTcast - sequential execution.')
 parser.add_argument('--min_budget',   type=float, help='Minimum budget used during the optimization.',    default=5)
-parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=15)
-parser.add_argument('--n_iterations', type=int,   help='Number of iterations performed by the optimizer', default=30)
-parser.add_argument('--n_workers', type=int,   help='Number of workers to run in parallel.', default=1)
+parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=30)
+parser.add_argument('--n_iterations', type=int,   help='Number of iterations performed by the optimizer', default=50)
+parser.add_argument('--n_workers', type=int,   help='Number of workers to run in parallel.', default=2)
 parser.add_argument('--shared_directory',type=str, help='A directory that is accessible for all processes, e.g. a NFS share.', default='.')
-# if warm_start and (run_cnt>0):
-# 	parser.add_argument('--previous_run_dir',type=str, help='A directory that contains a config.json and results.json for the same configuration space.', default='WTTcast_run_'+str(run_cnt))
-# 	warm_start_check=True
+if warm_start and (run_cnt>0):
+	parser.add_argument('--previous_run_dir',type=str, help='A directory that contains a config.json and results.json for the same configuration space.', default='WTTcast_run_'+str(run_cnt))
+	warm_start_check=True
 
 args=parser.parse_args()
 
@@ -96,8 +96,6 @@ for i in range(args.n_workers):
     w = worker(nameserver='127.0.0.1',run_id='WTTcast', id=i)
     w.run(background=True)
     workers.append(w)
-
-warm_start_check=False
 
 #Define and run an optimizer
 if warm_start_check:
