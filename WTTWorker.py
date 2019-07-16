@@ -148,7 +148,7 @@ class WTTWorker(Worker):
 		
 		model.compile(loss='mean_squared_error', optimizer=Adam(lr=config['learning_rate']))
 
-		model.fit(self.X_train, self.Y_train, batch_size=self.batch_size, epochs=int(budget), verbose=0)
+		model.fit(self.X_train, self.Y_train, batch_size=self.batch_size, epochs=int(budget))
 
 		train_score=model.evaluate(self.X_train,self.Y_train)
 		valid_score=model.evaluate(self.X_valid,self.Y_valid)
