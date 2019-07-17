@@ -111,7 +111,7 @@ class WTTWorker(Worker):
 
 		num_temporal_GRU1=UIH(			'num_temporal_GRU1',
 										lower=10,upper=50,
-										default_value=30,log=False)
+										default_value=20,log=False)
 
 		num_temporal_conv=UIH(			'num_temporal_conv',
 										lower=10,upper=50,
@@ -123,7 +123,7 @@ class WTTWorker(Worker):
 
 		num_temporal_GRU2=UIH(			'num_temporal_GRU2',
 										lower=10,upper=50,
-										default_value=30,log=False)
+										default_value=20,log=False)
 
 		num_dense1=UIH(					'num_dense1',
 										lower=10,upper=50,

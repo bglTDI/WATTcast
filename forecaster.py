@@ -17,7 +17,7 @@ from hpbandster.optimizers import BOHB
 # logging.basicConfig(level=logging.WARNING)
 
 # Warm start option
-warm_start=True
+warm_start=False
 
 #Check for previous runs, set pointer to latest, make new results directory
 run_cnt=-1
