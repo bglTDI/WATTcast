@@ -21,6 +21,7 @@ from ConfigSpace.hyperparameters import UniformIntegerHyperparameter as UIH
 class WTTWorker(Worker):
 	def __init__(self,**kwargs):
 		super().__init__(**kwargs)
+		
 		self.batch_size=16
 
 		self.data_info=dill.load(open('Data/data_info.pkl','rb'))
@@ -126,11 +127,11 @@ class WTTWorker(Worker):
 										default_value=20,log=False)
 
 		num_dense1=UIH(					'num_dense1',
-										lower=10,upper=50,
+										lower=10,upper=100,
 										default_value=20,log=False)
 
 		num_dense2=UIH(					'num_dense2',
-										lower=10,upper=50,
+										lower=10,upper=100,
 										default_value=20,log=False)
 
 		cs.add_hyperparameters([		learning_rate,
