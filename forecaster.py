@@ -98,13 +98,13 @@ dill.dump(Y_train,open("Data/Y_train.pkl",'wb'))
 dill.dump(Y_valid,open("Data/Y_valid.pkl",'wb'))
 
 # Import a worker class
-from WTTWorker import WTTWorker as worker
+from WTTWorker_1prong import WTTWorker as worker
 
 #Build an argument parser 
 warm_start_check=False       
 parser = argparse.ArgumentParser(description='WTTcast - sequential execution.')
 parser.add_argument('--min_budget',   type=float, help='Minimum budget used during the optimization.',    default=1)
-parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=25)
+parser.add_argument('--max_budget',   type=float, help='Maximum budget used during the optimization.',    default=50)
 parser.add_argument('--n_iterations', type=int,   help='Number of iterations performed by the optimizer', default=50)
 parser.add_argument('--n_workers', type=int,   help='Number of workers to run in parallel.', default=2)
 parser.add_argument('--shared_directory',type=str, help='A directory that is accessible for all processes, e.g. a NFS share.', default='.')
@@ -125,7 +125,6 @@ NS.start()
 #Start the workers
 workers=[]
 for i in range(args.n_workers):
-	time.sleep(5)
 	w = worker(nameserver='127.0.0.1',run_id='WTTcast', id=i)
 	w.run(background=True)
 	workers.append(w)
